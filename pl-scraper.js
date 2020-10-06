@@ -4,7 +4,7 @@ const readline = require("readline");
 const xlsx = require("xlsx");
 
 // https://www.businesslist.ph/company/263811/gigz-superclub
-const wb = xlsx.readFile("nyahaha.csv", {cellDates: true});
+const wb = xlsx.readFile("Reference.csv", {cellDates: true});
 const ws = wb.Sheets["Sheet1"];
 
 const wsData = xlsx.utils.sheet_to_json(ws);
@@ -72,22 +72,32 @@ rl.on('line', (line) => {
                     'Account Contact Email': '',
                     'Account Contact URL': ''
                 });
-                console.log('\n\nScrape Data: ');
-                const newWS = xlsx.utils.json_to_sheet(wsData);
-                console.log(newWS);
-                xlsx.utils.sheet_to_csv(newWS);
-                const newWB = xlsx.utils.book_append_sheet(wb, newWS, "New Data");
-                xlsx.write(newWB);
+                console.log('\nLoading....');
+                console.log(wsData.length);
+                console.log('Success: New Data Added! ');
                 
             })
             .catch(console.error);
         });
         break;
       case '2':
+        // name
+        const date = new Date();
+        const fulldate = date.toLocaleTimeString();
+        // new book
+        const newWB = xlsx.utils.book_new();
+        const newWS = xlsx.utils.json_to_sheet(wsData);
+
+        // Append the sheet
+        xlsx.utils.book_append_sheet(newWB, newWS, "New Data");
+        xlsx.writeFile(newWB, 'New Data File-'+ fulldate.replace(/:/g, '') +'.csv');
+        
+        // close
         rl.close();
+        
         break;
       default:
-        console.log(`Just type 1 to scrape and 2 to quit: `);
+        console.log(`Just type 1 to scrape and 2 to download: `);
         break;
     }
     rl.prompt();
@@ -95,6 +105,6 @@ rl.on('line', (line) => {
 
 
 rl.on("close", function() {
-    console.log("\nBYE BYE !!!");
+    console.log("\nFin!");
     process.exit(0);
 });
