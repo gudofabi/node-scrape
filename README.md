@@ -13,7 +13,9 @@ How to install: (you need nodejs and git in your machine)
 
 How to use:
 
-We have 2 options
+Step 1: node pl-scraper
+
+Step 2: We have 2 options
 
 1. Enter url:
 2. Download the csv file
