@@ -41,7 +41,7 @@ rl.on('line', (line) => {
                     'Listing Address': address,
                     'Listing Country': 'Philippines',
                     'Listing Country Abbreviation': 'PHP',
-                    'Listing Region': '',
+                    'Listing Region': state,
                     'Listing Region Abbreviation': '',
                     'Listing State': state,
                     'Listing State Abbreviation': '',
@@ -75,7 +75,6 @@ rl.on('line', (line) => {
                 console.log('\n\nScrape Data: ');
                 const newWS = xlsx.utils.json_to_sheet(wsData);
                 console.log(newWS);
-                xlsx.utils.sheet_to_csv(newWS);
                 const newWB = xlsx.utils.book_append_sheet(wb, newWS, "New Data");
                 xlsx.write(newWB);
                 
